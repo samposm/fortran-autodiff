@@ -14,7 +14,7 @@ contains
   function f1(a) result(s)
     type(dual_number), intent(in) :: a
     type(dual_number) :: s
-    s = 2.0*a - a / (a + 1.0)
+    s = 2.0*a - a / (-a + 3.0)
   end function f1
 
 end program example

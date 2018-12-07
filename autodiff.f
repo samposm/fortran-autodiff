@@ -17,6 +17,7 @@ module autodiff
 
   interface operator(-)
      module procedure minus_dual_dual
+     module procedure minus_dual
      module procedure minus_dual_real
      module procedure minus_real_dual
   end interface operator(-)
@@ -66,6 +67,12 @@ contains
     type(dual_number) :: r
     r%val = a%val - b%val ; r%eps = a%eps - b%eps
   end function minus_dual_dual
+
+  function minus_dual(a) result(r)
+    type(dual_number), intent(in) :: a
+    type(dual_number) :: r
+    r%val = -a%val ; r%eps = -a%eps
+  end function minus_dual
 
   function minus_dual_real(a,x) result(r)
     type(dual_number), intent(in) :: a
