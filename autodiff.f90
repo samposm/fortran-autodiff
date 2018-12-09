@@ -2,7 +2,8 @@ module autodiff
   implicit none
   private
   public :: dual_number,init_dual, &
-            operator(+),operator(-),operator(*),operator(/)
+            operator(+),operator(-),operator(*),operator(/), &
+            exp
 
   type dual_number
      real :: val ! value
@@ -33,6 +34,10 @@ module autodiff
      module procedure division_dual_real
      module procedure division_real_dual
   end interface operator(/)
+
+  interface exp
+     module procedure exp_dual
+  end interface exp
 
 contains
 
@@ -127,5 +132,11 @@ contains
     type(dual_number) :: r
     r%val = 1.0 / a%val ; r%eps = -x * a%eps / a%val**2
   end function division_real_dual
+
+  function exp_dual(a) result(r)
+    type(dual_number), intent(in) :: a
+    type(dual_number) :: r
+    r%val = exp(a%val) ; r%eps = a%eps * exp(a%val)
+  end function exp_dual
 
 end module autodiff
