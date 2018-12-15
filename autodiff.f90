@@ -3,7 +3,7 @@ module autodiff
   private
   public :: dual_number,init_dual, &
             operator(+),operator(-),operator(*),operator(/), &
-            exp
+            exp,log
 
   type dual_number
      real :: val ! value
@@ -38,6 +38,9 @@ module autodiff
   interface exp
      module procedure exp_dual
   end interface exp
+  interface log
+     module procedure log_dual
+  end interface log
 
 contains
 
@@ -138,5 +141,11 @@ contains
     type(dual_number) :: r
     r%val = exp(a%val) ; r%eps = a%eps * exp(a%val)
   end function exp_dual
+
+  function log_dual(a) result(r)
+    type(dual_number), intent(in) :: a
+    type(dual_number) :: r
+    r%val = log(a%val) ; r%eps = a%eps / a%val
+  end function log_dual
 
 end module autodiff
