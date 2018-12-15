@@ -90,7 +90,7 @@ contains
     type(dual_number), intent(in) :: a
     real, intent(in) :: x
     type(dual_number) :: r
-    r%val = a%val - x ; r%eps = a%eps
+    r%val = x - a%val ; r%eps = -a%eps
   end function minus_real_dual
 
   function times_dual_dual(a,b) result(r)
